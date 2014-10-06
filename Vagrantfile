@@ -7,7 +7,7 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
  	config.vm.box = "chef/centos-6.5"
 
-	config.vm.define :mms do |server|
+	config.vm.define :mongoStandalone do |server|
 		server.vm.box = "chef/centos-6.5"
 
 		server.vm.provider "virtualbox" do |vb|
