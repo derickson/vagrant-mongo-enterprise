@@ -25,5 +25,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		server.vm.hostname = "mongo-centos"
 		server.vm.provision :shell, path: "bootstrap.sh"
 		server.vm.network "forwarded_port", guest: 27017, host: 27017
+		server.vm.network "forwarded_port", guest: 27018, host: 27018
+		server.vm.network "forwarded_port", guest: 27019, host: 27019
+		server.vm.network "forwarded_port", guest: 27020, host: 27020
 	end
 end

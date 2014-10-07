@@ -52,12 +52,28 @@ echo "Installing new config file with Auth and SSL enabled"
 ## config file references a .pem in the /vagrant folder
 cp /vagrant/mongod-yaml.conf /etc/mongod.conf
 
-## 9) create SSL server side cert
-## the step is interactive so I've just checked in finished .pem file
-## openssl req -newkey rsa:2048 -new -x509 -days 365 -nodes -out mongodb-cert.crt -keyout mongodb-cert.key
-## cat mongodb-cert.key mongodb-cert.crt > mongodb.pem
+## 9) create the various certs
+
+## openssl req -newkey rsa:2048 -new -x509 -days 1001   -out ca.pem  -keyout ca.key
+#### ca phrase = "certificate"
+##echo "00" > file.srl 
+
+#### digests not allowed for FIPS 142 mode, so no digest cypher specified
+## openssl genrsa -out server.key 2048
+## openssl req -key server.key -new -out server.req 
+## openssl x509 -req -in server.req -CA ca.pem -CAkey ca.key -CAserial file.srl -out server.crt
+## cat server.key server.crt >> server.pem
+
+#### digests not allowed for FIPS 142 mode, so no digest cypher specified
+## openssl genrsa -out client.key 2048
+## openssl req -key client.key -new -out client.req
+## openssl x509 -req -in client.req -CA ca.pem -CAkey ca.key -CAserial file.srl -out client.crt
+## cat client.key client.crt >> client.pem
+
 
 ## 10) restart mongo
 echo "Restarting with MongoDB Auth"
 service mongod restart
 
+## 11) access database with the following
+## mongo --ssl --sslPEMKeyFile /vagrant/keys/client.pem -u admin -p admin admin
