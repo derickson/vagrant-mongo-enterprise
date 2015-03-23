@@ -68,7 +68,7 @@ cp /vagrant/mongod-yaml.conf /etc/mongod.conf
 ## openssl genrsa -out client.key 2048
 ## openssl req -key client.key -new -out client.req
 ## openssl x509 -req -in client.req -CA ca.pem -CAkey ca.key -CAserial file.srl -out client.crt
-## cat client.key client.crt >> client.pem
+## cat client.key client.crt >> client.pem 
 
 
 ## 10) restart mongo
